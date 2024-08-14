@@ -3,7 +3,7 @@ import React from "react";
 const Login = () => {
   return (
     <div className="bg-[#f1f5f9] h-screen flex justify-center items-center">
-      <div className="w-[26rem] h-[70vh] p-8 bg-white">
+      <div className="w-[26rem] h-[70vh] p-8 bg-white shadow-md">
         <div>
           <span className="font-semibold">Login</span>{" "}
           <span className="text-gray-400">or</span>{" "}

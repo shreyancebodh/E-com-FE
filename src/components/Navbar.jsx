@@ -54,7 +54,7 @@ const Navbar = ({ toggleShowCart }) => {
 
             {showProfile && (
               <div className="hover:cursor-default absolute top-full w-72 border bg-white text-black p-4 text-xs shadow-lg">
-                <h2 className="font-semibold">Welcome</h2>
+                <h2 className="font-semibold text-sm">Welcome</h2>
                 <p className="text-gray-500 mt-1">
                   To access account and manage orders
                 </p>
