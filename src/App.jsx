@@ -22,10 +22,10 @@ function App() {
       <Cart toggleShowCart={toggleShowCart} showCart={showCart}/>
 
       <Routes>
-        <Route path="/" element={<Home/>}></Route>
-        <Route path="/products" element={<Layout toggleShowCart={toggleShowCart}><Products/></Layout>}></Route>
-        <Route path="/products/:id" element={<Layout toggleShowCart={toggleShowCart}><Product/></Layout>}></Route>
-        <Route path="/login" element={<Layout toggleShowCart={toggleShowCart}><Login/></Layout>}></Route>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/products" element={<Layout toggleShowCart={toggleShowCart}><Products/></Layout>}/>
+        <Route path="/products/:id" element={<Layout toggleShowCart={toggleShowCart}><Product/></Layout>}/>
+        <Route path="/login" element={<Layout toggleShowCart={toggleShowCart}><Login/></Layout>}/>
       </Routes>
     </div>
   );

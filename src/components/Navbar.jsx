@@ -12,7 +12,7 @@ const Navbar = ({ toggleShowCart }) => {
 
   return (
     <nav className="fixed w-full px-4 bg-blue-600 z-20 top-0 text-white">
-      <div className="max-w-[1400px] mx-auto flex justify-between items-center">
+      <div className="max-w-[1400px] h-20 mx-auto flex justify-between items-center">
         <div className="flex gap-4 items-center">
           <Link to={"/"} className="text-2xl mr-5 tracking-wider">
             E-Commerce

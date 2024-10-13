@@ -1,20 +1,23 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../components/Button";
 import { ShoppingCartIcon, HeartIcon } from "@heroicons/react/24/outline";
 import Rating from "../components/Rating";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProductSkeleton from "../components/skeletons/ProductSkeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSingleProduct } from "../features/products/productsThunks";
 
 const Product = () => {
   const params = useParams();
-  const [product, setProduct] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
-  console.log(params.id);
+  // const [product, setProduct] = useState({});
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState();
+  // console.log(params.id);
+  const dispatch = useDispatch();
+  const {loading, error, selectedProduct: product} = useSelector(state => state.products);
 
+/*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,6 +41,12 @@ const Product = () => {
       fetchData();
     }, 2000);
   }, []);
+*/
+
+ useEffect(() => {
+    dispatch(fetchSingleProduct(params.id))
+ }, [dispatch])
+ 
 
   if (error) {
     return <div>{error}</div>;
@@ -45,9 +54,9 @@ const Product = () => {
 
   return (
     <>
-      {isLoading && <ProductSkeleton/>}
+      {loading && <ProductSkeleton/>}
 
-      {!isLoading && (
+      {!loading && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <div className="mx-auto max-w-[600px] border overflow-hidden">
