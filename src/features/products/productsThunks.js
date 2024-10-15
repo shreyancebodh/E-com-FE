@@ -17,3 +17,12 @@ export const fetchSingleProduct = createAsyncThunk(
     return response.data;
   }
 );
+
+export const addProduct = createAsyncThunk(
+  'products/addProduct',
+  async (productData) => {
+    const response = await apiClient.post(`/api/v1/products`, {...productData});
+    console.log(response)
+    return response.data;
+  }
+)

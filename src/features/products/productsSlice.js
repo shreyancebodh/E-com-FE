@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchSingleProduct, loadProducts } from './productsThunks';
+import { fetchSingleProduct, loadProducts, addProduct } from './productsThunks';
 
 const productsSlice = createSlice({
   name: 'products',
@@ -25,10 +25,11 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      ////////////////
+      
+      // show single product
       .addCase(fetchSingleProduct.pending, (state) => {
         state.loading = true;
-        state.selectedProduct = {};
+        state.error = null;
       })
       .addCase(fetchSingleProduct.fulfilled, (state, action) => {
         state.loading = false;
@@ -37,7 +38,21 @@ const productsSlice = createSlice({
       .addCase(fetchSingleProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      });
+      })
+
+      // create Product
+      .addCase(addProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items.push(action.payload);
+      })
+      .addCase(addProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
   },
 });
 

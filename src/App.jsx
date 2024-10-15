@@ -7,6 +7,7 @@ import Layout from "./pages/Layout";
 import Cart from "./components/Cart";
 import { useState } from "react";
 import Login from "./pages/Login";
+import ProductForm from "./pages/ProductForm";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/products" element={<Layout toggleShowCart={toggleShowCart}><Products/></Layout>}/>
+        <Route path="/products/new" element={<Layout toggleShowCart={toggleShowCart}><ProductForm/></Layout>}/>
         <Route path="/products/:id" element={<Layout toggleShowCart={toggleShowCart}><Product/></Layout>}/>
         <Route path="/login" element={<Layout toggleShowCart={toggleShowCart}><Login/></Layout>}/>
       </Routes>

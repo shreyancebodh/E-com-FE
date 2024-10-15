@@ -33,7 +33,7 @@ const Navbar = ({ toggleShowCart }) => {
           </Link>
 
           <Link
-            to={"/new"}
+            to={"/products/new"}
             className="font-semibold uppercase text-[15px] tracking-wider"
           >
             New
