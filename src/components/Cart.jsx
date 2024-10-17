@@ -2,7 +2,6 @@ import React from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const Cart = ({ showCart, toggleShowCart }) => {
-  console.log("hello from cart", showCart);
   return (
     // <div className='w-[400px] h-[calc(100%-86px)] bg-green-400 opacity-30 absolute top-[86px] right-0'>
     <div

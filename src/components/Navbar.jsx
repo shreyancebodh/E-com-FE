@@ -4,15 +4,19 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logoutUser } from "../features/auth/authSlice";
 
 const Navbar = ({ toggleShowCart }) => {
   const [showProfile, setShowProfile] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
   return (
     <nav className="fixed w-full px-4 bg-blue-600 z-20 top-0 text-white">
-      <div className="max-w-[1400px] h-20 mx-auto flex justify-between items-center">
+      <div className="max-w-[1400px] h-22 mx-auto flex justify-between items-center">
         <div className="flex gap-4 items-center">
           <Link to={"/"} className="text-2xl mr-5 tracking-wider">
             E-Commerce
@@ -58,8 +62,11 @@ const Navbar = ({ toggleShowCart }) => {
                 <p className="text-gray-500 mt-1">
                   To access account and manage orders
                 </p>
-                <div onClick={()=> navigate("/login")} className="text-blue-500 font-semibold uppercase mt-3 border border-gray-200 py-3 px-4 inline-block cursor-pointer hover:border-blue-500">
-                  Login/Signup
+                <div onClick={()=> {
+                  isAuthenticated ? dispatch(logoutUser()) : null
+                  navigate("/login");
+                }} className="text-blue-500 font-semibold uppercase mt-3 border border-gray-200 py-3 px-4 inline-block cursor-pointer hover:border-blue-500">
+                  { isAuthenticated ? "Logout" : "Login/Signup" }
                 </div>
               </div>
             )}

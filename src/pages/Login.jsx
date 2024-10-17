@@ -1,52 +1,46 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../features/auth/authThunk";
+import { PulseLoader } from "react-spinners";
 
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [phone, setPhone] = useState("");
-  const navigate = useNavigate()
+  const { loading, error } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  async function handleClick() {
-    if (!phone || phone.length != 10) return alert("Enter Valid Phone Number");
-    setIsLoading(true);
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`,
-        {phone}
-      );
-      console.log(res);
-  
-      localStorage.setItem('loginToken', JSON.stringify(res.data.result.Authorization));
-      localStorage.setItem('user', JSON.stringify({phone: res.data.result.user.phone, _id: res.data.result.user._id}));
-  
-      navigate('/products');
-    } catch (error) {
-      alert('Something went wrong! Please try again later.')
-    }
+  function handleClick() {
+    dispatch(loginUser({ email, password }));
   }
 
   return (
     <div className="bg-[#f1f5f9] h-screen flex justify-center items-center">
       <div className="w-[26rem] h-[70vh] p-8 bg-white shadow-md">
         <>
-          <div>
-            <span className="font-semibold">Login</span>{" "}
-            <span className="text-gray-400">or</span>{" "}
-            <span className="font-semibold">Signup</span>
+          <div className="flex justify-center text-4xl mb-8">
+            <span className="font-light">Login</span>{" "}
+            {/* <span className="text-gray-400">or</span>{" "}
+            <span className="font-semibold">Signup</span> */}
           </div>
 
-          <div className="flex my-5 border items-center py-2.5">
-            <div className="ms-3 text-xs text-gray-400 flex items-center justify-center">
-              +91
-            </div>
-            <div className="w-0 border-l-[1px] h-[1rem] mx-3 border-gray-300"></div>
+          <div className="flex my-5 border items-center p-2.5">
             <input
-              onChange={(e) => setPhone(e.target.value)}
-              className="placeholder:text-xs outline-none text-xs"
-              type="tel"
-              placeholder="Mobile Number*"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              onChange={(e) => setEmail(e.target.value)}
+              className="placeholder:text-xs outline-none text-sm w-full"
+              type="email"
+              placeholder="Email*"
+            />
+          </div>
+
+          <div className="flex my-5 border items-center p-2.5">
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              className="placeholder:text-xs outline-none text-sm w-full"
+              type="password"
+              placeholder="Password*"
             />
           </div>
 
@@ -65,7 +59,7 @@ const Login = () => {
             onClick={handleClick}
             className="mt-5 cursor-pointer uppercase py-2.5 px-3 font-semibold bg-blue-600 text-center text-white text-sm"
           >
-            Continue
+            {loading ? <PulseLoader color="#ffffff" size={8} /> : "Continue"}
           </div>
 
           <div className="my-5 text-gray-500 text-xs">
