@@ -10,9 +10,9 @@ import { logoutUser } from "../features/auth/authSlice";
 
 const Navbar = ({ toggleShowCart }) => {
   const [showProfile, setShowProfile] = useState(false);
-  const navigate = useNavigate();
   const { isAuthenticated } = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <nav className="fixed w-full px-4 bg-blue-600 z-20 top-0 text-white">

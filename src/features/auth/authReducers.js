@@ -19,7 +19,7 @@ export const authReducers = (builder) => {
     })
     .addCase(loginUser.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message || "Something went wrong, Please try again later.";
     })
 
     // register
@@ -34,6 +34,6 @@ export const authReducers = (builder) => {
     })
     .addCase(registerUser.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message || "Something went wrong, Please try again later.";
     });
 };

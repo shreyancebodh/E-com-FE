@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authThunk";
 import { PulseLoader } from "react-spinners";
+import { getCart } from "../features/cart/cartThunk";
 
 const Login = () => {
   const { loading, error } = useSelector(
@@ -13,7 +14,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   function handleClick() {
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password })).unwrap().then(()=>{
+      dispatch(getCart())
+    })
   }
 
   return (

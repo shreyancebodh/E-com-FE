@@ -7,46 +7,39 @@ import "react-loading-skeleton/dist/skeleton.css";
 import ProductSkeleton from "../components/skeletons/ProductSkeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProduct } from "../features/products/productsThunks";
+import { addToCart, removeFromCart } from "../features/cart/cartSlice";
+import { addItemToCart } from "../features/cart/cartThunk";
+
+const clickTypes = {
+  addToCart: "addToCart",
+  addToWishlist: "addToWishlist",
+};
 
 const Product = () => {
   const params = useParams();
-  // const [product, setProduct] = useState({});
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState();
-  // console.log(params.id);
   const dispatch = useDispatch();
-  const {loading, error, selectedProduct: product} = useSelector(state => state.products);
+  const {
+    loading,
+    error,
+    selectedProduct: product,
+  } = useSelector((state) => state.products);
 
-/*
+  function clickhandler(type) {
+    if (type === "addToCart") {
+      // optimistic update
+      dispatch(addToCart(product));
+
+      // add api call
+      dispatch(addItemToCart(product)).unwrap().catch((err) => {
+        // rollback the optimistic update
+        dispatch(removeFromCart(product))
+      })
+    }
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/products/${params.id}`
-        );
-        console.log(res.data);
-
-        if (res.status == 200) {
-          setProduct(res.data.product);
-        } else {
-          setError("Something went wrong!");
-        }
-        setIsLoading(false);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    setTimeout(() => {
-      fetchData();
-    }, 2000);
-  }, []);
-*/
-
- useEffect(() => {
-    dispatch(fetchSingleProduct(params.id))
- }, [dispatch])
- 
+    dispatch(fetchSingleProduct(params.id));
+  }, [dispatch]);
 
   if (error) {
     return <div>{error}</div>;
@@ -54,7 +47,7 @@ const Product = () => {
 
   return (
     <>
-      {loading && <ProductSkeleton/>}
+      {loading && <ProductSkeleton />}
 
       {!loading && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -85,22 +78,15 @@ const Product = () => {
                     src={product.imageSrc ? product?.imageSrc[0] : ""}
                   />
                 </div>
-                {/* <img
-                className="border w-[33.33%] object-contain"
-                src={product.imageSrc ? product?.imageSrc[0] : ""}
-              />
-              <img
-                className="border w-[33.33%] object-contain"
-                src={product.imageSrc ? product?.imageSrc[0] : ""}
-              /> */}
               </div>
             </div>
           </div>
 
+          {/* product details */}
           <div>
             <div className="max-w-[630px] mx-auto">
               <h1 className="text-3xl font-semibold text-gray-800">
-                {product.name} 
+                {product.name}
               </h1>
               <p className="my-3 text-gray-600 text-lg">
                 {product.description}
@@ -112,7 +98,10 @@ const Product = () => {
                 inclusive of all tax
               </p>
               <div className="flex gap-3">
-                <Button className="text-[17px] flex-1 font-semibold py-4 rounded-md hover:bg-blue-500 uppercase">
+                <Button
+                  onClick={() => clickhandler(clickTypes.addToCart)}
+                  className="text-[17px] flex-1 font-semibold py-4 rounded-md hover:bg-blue-500 uppercase"
+                >
                   <div className="flex items-center justify-center">
                     <ShoppingCartIcon className="size-6 inline mr-3" />
                     <span>Add to Cart</span>

@@ -23,6 +23,6 @@ const authSlice = createSlice({
   extraReducers: authReducers,
 });
 
-export const { logoutUser, hydrateAuth } = authSlice.actions;
+export const { logoutUser } = authSlice.actions;
 
 export default authSlice.reducer;
