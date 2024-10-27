@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../components/Button";
 import { ShoppingCartIcon, HeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon as SolidHeartIcon } from '@heroicons/react/24/solid';
 import Rating from "../components/Rating";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProductSkeleton from "../components/skeletons/ProductSkeleton";
@@ -9,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProduct } from "../features/products/productsThunks";
 import { addToCart, removeFromCart } from "../features/cart/cartSlice";
 import { addItemToCart } from "../features/cart/cartThunk";
+import { addToWishlist } from "../features/wishlist/wishlistThunk";
 
 const clickTypes = {
   addToCart: "addToCart",
@@ -23,23 +25,32 @@ const Product = () => {
     error,
     selectedProduct: product,
   } = useSelector((state) => state.products);
+  const { items: wishlist = [] } = useSelector((state) => state.wishlist);
 
   function clickhandler(type) {
-    if (type === "addToCart") {
+    if (type === clickTypes.addToCart) {
       // optimistic update
       dispatch(addToCart(product));
 
       // add api call
-      dispatch(addItemToCart(product)).unwrap().catch((err) => {
-        // rollback the optimistic update
-        dispatch(removeFromCart(product))
-      })
+      dispatch(addItemToCart(product))
+        .unwrap()
+        .catch((err) => {
+          // rollback the optimistic update
+          dispatch(removeFromCart(product));
+        });
+    }
+
+    if (type === clickTypes.addToWishlist) {
+      dispatch(addToWishlist(product._id));
     }
   }
 
   useEffect(() => {
     dispatch(fetchSingleProduct(params.id));
   }, [dispatch]);
+
+  const isInWishlist = wishlist.find(item => item._id === product._id);
 
   if (error) {
     return <div>{error}</div>;
@@ -109,13 +120,14 @@ const Product = () => {
                 </Button>
 
                 <Button
+                  onClick={isInWishlist ? null : () => clickhandler(clickTypes.addToWishlist)}
                   className={
                     "text-[17px] flex-1 font-semibold uppercase py-4 rounded-md hover:border-gray-900 bg-white border border-gray-300 text-gray-900"
                   }
                 >
                   <div className="flex items-center justify-center text-gray-900">
-                    <HeartIcon className="size-6 mr-3" />
-                    <span>Wishlist</span>
+                  {isInWishlist ? <SolidHeartIcon className="size-6 mr-3 text-red-500" /> : <HeartIcon className="size-6 mr-3" />}
+                    <span>{isInWishlist ? "Wishlisted" : "Wishlist"} </span>
                   </div>
                 </Button>
               </div>
@@ -141,18 +153,3 @@ const Product = () => {
 };
 
 export default Product;
-
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  fill="none"
-  viewBox="0 0 24 24"
-  strokeWidth={1.5}
-  stroke="currentColor"
-  className="size-6"
->
-  <path
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-  />
-</svg>;

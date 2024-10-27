@@ -119,10 +119,10 @@ const Cart = ({ showCart, toggleShowCart }) => {
           )}
 
           {isAuthenticated && (
-            <div className="sticky bottom-0 pt-4 py-3 bg-white">
+            <div className="sticky bottom-0 py-1 mt-12 bg-white border-t-2">
               <div className="flex justify-between my-2">
                 <span className="text-xl">Total</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span className="font-semibold">${totalPrice.toFixed(2)}</span>
               </div>
               <div className="flex justify-end my-1">
                 <Button className="text-sm">Checkout</Button>

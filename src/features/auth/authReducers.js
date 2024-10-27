@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { loginUser, registerUser } from "./authThunk";
 
 export const authReducers = (builder) => {
@@ -9,17 +10,18 @@ export const authReducers = (builder) => {
     .addCase(loginUser.fulfilled, (state, action) => {
       const { token, ...user } = action.payload;
 
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("user", JSON.stringify(user));
-
       state.loading = false;
       state.isAuthenticated = true;
       state.user = user;
       state.token = token;
+      toast.success('Logged in successfully');
     })
     .addCase(loginUser.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.message || "Something went wrong, Please try again later.";
+      console.log(action.payload)
+      state.error = action.payload || "Something went wrong, Please try again later.";
+      toast.dismiss();
+      toast.error(action.payload);
     })
 
     // register
@@ -31,9 +33,11 @@ export const authReducers = (builder) => {
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload; // Set user data after registration
+      toast.success('Registered successfully');
     })
     .addCase(registerUser.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.message || "Something went wrong, Please try again later.";
+      state.error = action.payload || "Something went wrong, Please try again later.";
+      toast.error(action.payload);
     });
 };

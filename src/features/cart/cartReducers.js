@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { addItemToCart, deleteItemFromCart, getCart } from "./cartThunk";
 
 export const cartReducers = (builder) => {
@@ -17,6 +18,7 @@ export const cartReducers = (builder) => {
     .addCase(getCart.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
+      toast.error(action.payload)
     })
 
     // ---------------------------- add item to cart
@@ -24,17 +26,21 @@ export const cartReducers = (builder) => {
       // state.status = "succeeded";
       // Replace the optimistic update with the server response
       state.items = action.payload;
+      toast.success("Item added to cart")
     })
     .addCase(addItemToCart.rejected, (state, action) => {
       // state.status = "failed";
       state.error = action.payload;
+      toast.error(action.payload)
     })
 
     // ---------------------------- delete item from cart
     .addCase(deleteItemFromCart.fulfilled, (state, action) => {
       state.items = action.payload;
+      toast.success("Item removed from cart")
     })
     .addCase(deleteItemFromCart.rejected, (state, action) => {
       state.error = action.payload;
+      toast.error(action.payload)
     });
 };

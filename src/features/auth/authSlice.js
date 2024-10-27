@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { authReducers } from "./authReducers";
+import toast from "react-hot-toast";
 
 const initialState = {
   user: null,
@@ -18,6 +19,7 @@ const authSlice = createSlice({
       localStorage.removeItem('user')
       state.user = null;
       state.isAuthenticated = false;
+      toast.success("Logged out successfully")
     },
   },
   extraReducers: authReducers,

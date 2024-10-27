@@ -72,7 +72,7 @@ const Navbar = ({ toggleShowCart }) => {
             )}
           </div>
 
-          <div className="hover:cursor-pointer flex flex-col justify-center items-center gap-[2px]">
+          <div onClick={() => navigate("/wishlist")} className="hover:cursor-pointer flex flex-col justify-center items-center gap-[2px]">
             <HeartIcon className="size-6" />
             <span className="text-sm font-semibold mb-5">Wishlist</span>
           </div>
