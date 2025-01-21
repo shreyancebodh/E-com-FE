@@ -61,7 +61,7 @@ const Product = () => {
       {loading && <ProductSkeleton />}
 
       {!loading && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 sm:px-0">
           <div>
             <div className="mx-auto max-w-[600px] border overflow-hidden">
               <div className="max-h-[600px] mb-[2px] w-full overflow-hidden">

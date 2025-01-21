@@ -17,31 +17,33 @@ const Navbar = ({ toggleShowCart }) => {
   return (
     <nav className="fixed w-full px-4 bg-blue-600 z-20 top-0 text-white">
       <div className="max-w-[1400px] h-22 mx-auto flex justify-between items-center">
-        <div className="flex gap-4 items-center">
-          <Link to={"/"} className="text-2xl mr-5 tracking-wider">
+        <div className="flex items-center">
+          <Link to={"/"} className="text-xl md:text-2xl mr-5 tracking-wider">
             E-Commerce
           </Link>
 
-          <Link
-            to={"/"}
-            className="font-semibold uppercase text-[15px] tracking-wider"
-          >
-            Home
-          </Link>
+          <div className="gap-4 hidden md:flex">
+            <Link
+              to={"/"}
+              className="font-semibold uppercase text-[15px] tracking-wider"
+            >
+              Home
+            </Link>
 
-          <Link
-            to={"/products"}
-            className="font-semibold uppercase text-[15px] tracking-wider"
-          >
-            Products
-          </Link>
+            <Link
+              to={"/products"}
+              className="font-semibold uppercase text-[15px] tracking-wider"
+            >
+              Products
+            </Link>
 
-          <Link
-            to={"/products/new"}
-            className="font-semibold uppercase text-[15px] tracking-wider"
-          >
-            New
-          </Link>
+            <Link
+              to={"/products/new"}
+              className="font-semibold uppercase text-[15px] tracking-wider"
+            >
+              New
+            </Link>
+          </div>
         </div>
 
         <div className="hover:cursor-pointer flex items-end justify-center gap-6 mt-5">

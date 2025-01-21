@@ -23,9 +23,9 @@ const Home = () => {
 
         <div className="fixed w-full p-5  z-20 top-0 text-white">
           <div className="max-w-[1200px] mx-auto flex justify-between">
-            <a className="text-2xl" href="#">E-Commerce</a>
+            <a className="text-xl md:text-2xl" href="#">E-Commerce</a>
             <div className="font-bold flex gap-4 items-center">
-              <Link to={"/"} className="text-[16px] hover:cursor-pointer border-b-[3px] hover:border-white hover:border-b-[3px]">Home</Link>
+              <Link to={"/"} className="hidden md:inline-block text-[16px] hover:cursor-pointer border-b-[3px] hover:border-white hover:border-b-[3px]">Home</Link>
               <Link to={"/products"} className="text-[16px] hover:cursor-pointer border-transparent border-b-[3px] hover:border-white hover:border-b-[3px]">Products</Link>
              {!isAuthenticated ?
                <>
@@ -43,7 +43,7 @@ const Home = () => {
 
 
           <div className="absolute z-10 w-full h-full flex items-center justify-center">
-            <div className="text-center text-white">
+            <div className="text-center text-white px-3">
               <h1 className="text-4xl font-semibold mb-3">Shopping Cart</h1>
               <p className="font-light text-lg">Welcome to Shopping Cart!</p>
               <p className="font-light text-lg">Jump right in and explore our many products.</p>
